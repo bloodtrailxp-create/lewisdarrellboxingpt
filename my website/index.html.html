@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lewis Darrell PT</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+
+        /* Navigation Header */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 68, 0, 0.2);
+            z-index: 1000;
+            padding: 1rem 2rem;
+        }
+
+        .navbar-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffffff 0%, #ff4400 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .navbar-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #ff4400;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link:hover {
+            color: #ff4400;
+        }
+
+        .nav-link.active {
+            color: #ff4400;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-bottom: 6rem;
+            padding: 4rem 0;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 68, 0, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.15; }
+            50% { transform: scale(1.1); opacity: 0.25; }
+        }
+
+        .hero-text {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, #ff4400 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero-text p {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: #ffffff;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .hero-text p strong {
+            color: #ff4400;
+            font-size: 1.5rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, #ff4400 0%, #ff6b35 100%);
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            margin-top: 1.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 68, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+            cursor: pointer;
+            border: none;
+        }
+
+        .button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 68, 0, 0.4);
+        }
+
+        .hero-image {
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 1s ease-out 0.3s both;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .hero-image img:hover {
+            transform: scale(1.02);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            color: #ffffff;
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #ff4400, #ff6b35);
+            border-radius: 2px;
+        }
+
+        .container > p {
+            color: #cccccc;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin-bottom: 4rem;
+            line-height: 1.8;
+        }
+
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 68, 0, 0.1) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 68, 0, 0.5);
+            box-shadow: 0 20px 40px rgba(255, 68, 0, 0.2);
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #ff4400;
+            font-weight: 700;
+        }
+
+        .card p {
+            color: #ffffff;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        /* Booking Section */
+        .booking-section {
+            display: none;
+            max-width: 700px;
+            margin: 4rem auto;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 3rem;
+        }
+
+        .booking-section.active {
+            display: block;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .booking-section h2 {
+            margin-bottom: 1rem;
+        }
+
+        .availability-info {
+            background: rgba(255, 68, 0, 0.1);
+            border-left: 4px solid #ff4400;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+        }
+
+        .availability-info p {
+            color: #ffffff;
+            font-size: 1rem;
+            margin: 0.5rem 0;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            color: #ffffff;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.875rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+
+        select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            padding-right: 2.5rem;
+            cursor: pointer;
+        }
+
+        select option {
+            background: #1a1a1a;
+            color: #ffffff;
+            padding: 0.5rem;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #ff4400;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .back-button {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            margin-right: 1rem;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .success-message {
+            display: none;
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid #4CAF50;
+            color: #4CAF50;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        /* Gallery Section */
+        .gallery-section {
+            display: none;
+        }
+
+        .gallery-section.active {
+            display: block;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .gallery-item {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 68, 0, 0.5);
+            box-shadow: 0 10px 30px rgba(255, 68, 0, 0.2);
+        }
+
+        .gallery-item img,
+        .gallery-item video {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .gallery-item-caption {
+            padding: 1rem;
+            color: #ffffff;
+            font-size: 1rem;
+        }
+
+        .upload-section {
+            background: rgba(255, 68, 0, 0.1);
+            border: 2px dashed #ff4400;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .upload-section p {
+            color: #ffffff;
+            margin-bottom: 1rem;
+        }
+
+        /* Responsive Design */
+            @media (max-width: 768px) {
+            .navbar-links {
+                gap: 1rem;
+            }
+
+            .nav-link {
+                font-size: 0.9rem;
+            }
+
+            .navbar-brand {
+                font-size: 1.2rem;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 2rem 0;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-text p {
+                font-size: 1.1rem;
+            }
+
+            .hero-text p strong {
+                font-size: 1.3rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .services {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .booking-section {
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+
+            .button {
+                padding: 0.875rem 2rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Navigation Header -->
+<nav class="navbar">
+    <div class="navbar-content">
+        <div class="navbar-brand">Lewis Darrell PT</div>
+        <div class="navbar-links">
+            <a class="nav-link active" onclick="showHome()">Home</a>
+            <a class="nav-link" onclick="showGallery()">Gallery</a>
+            <a class="nav-link" onclick="showBooking()">Book Now</a>
+        </div>
+    </div>
+</nav>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script type="text/javascript">
+    (function(){
+        emailjs.init("yNVcmu2So9G3FT2MW");
+    })();
+</script>
+
+<div class="container">
+
+    <!-- MAIN CONTENT -->
+    <div id="mainContent">
+        <!-- HERO SECTION -->
+        <div class="hero">
+            <div class="hero-text">
+                <h1>Lewis Darrell Personal trainer</h1>
+                <p><strong>Build strength. Lose fat. Train with purpose.</strong></p>
+                <p>
+                    Personal training focused on real results, discipline,
+                    and long-term confidence — no gimmicks.
+                </p>
+                <button class="button" onclick="showBooking()">
+                    Book a Free Consultation
+                </button>
+            </div>
+
+            <div class="hero-image">
+           <img src="images/lewispt.jpg" alt="Lewis Darrell personal trainer">
+            </div>
+        </div>
+
+        <!-- ABOUT -->
+        <div style="background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(10px); padding: 3rem; border-radius: 20px; border: 1px solid rgba(255, 68, 0, 0.3); margin-bottom: 6rem; max-width: 900px;">
+            <h2 style="color: #ffffff; margin-bottom: 1.5rem; font-size: 2.5rem;">About Me</h2>
+            <p style="color: #e8e8e8; font-size: 1.3rem; line-height: 1.9; font-weight: 400; margin: 0;">
+                I'm Lewis, a qualified personal trainer focused on sustainable results.
+                Whether you're new to the gym or looking to level up your training,
+                I create personalised plans that fit your lifestyle.
+            </p>
+        </div>
+
+        <!-- SERVICES -->
+        <h2>Coaching Options</h2>
+        <div class="services">
+            <div class="card">
+                <h3>1-to-1 Personal trainer</h3>
+                <p>Face-to-face coaching with tailored workouts and full support.</p>
+            </div>
+
+            <div class="card">
+                <h3>Online Coaching</h3>
+                <p>Train anywhere with custom programs, check-ins, and accountability.</p>
+            </div>
+
+            <div class="card">
+                <h3>Fat Loss & Strength</h3>
+                <p>Structured training and nutrition guidance built around your goals.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- GALLERY SECTION -->
+    <div id="gallerySection" class="gallery-section">
+        <h2>Gallery</h2>
+        
+        <div class="upload-section">
+            <p><strong>Add Your Photos & Videos</strong></p>
+            <p style="font-size: 0.9rem; color: #cccccc;">Upload transformation photos, workout videos, and client testimonials</p>
+        </div>
+
+        <div class="gallery-grid" id="galleryGrid">
+            <!-- Sample gallery items - replace with your actual content -->
+            <div class="gallery-item">
+                <img src="https://placehold.co/400x300/1a1a1a/ff4400?text=Training+Session" alt="Training">
+                <div class="gallery-item-caption">Client transformation progress</div>
+            </div>
+            
+            <div class="gallery-item">
+                <img src="https://placehold.co/400x300/1a1a1a/ff4400?text=Workout+Video" alt="Workout">
+                <div class="gallery-item-caption">Strength training tips</div>
+            </div>
+            
+            <div class="gallery-item">
+                <img src="https://placehold.co/400x300/1a1a1a/ff4400?text=Results" alt="Results">
+                <div class="gallery-item-caption">Before & after results</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOOKING SECTION -->
+    <div id="bookingSection" class="booking-section">
+        <h2>Book Your Free Consultation</h2>
+        
+        <div class="availability-info">
+            <p><strong>Available Times:</strong></p>
+            <p>📅 Wednesday: After 4:30 PM</p>
+            <p>📅 Friday: After 6:30 PM</p>
+            <p>📅 Saturday & Sunday: Anytime</p>
+        </div>
+
+        <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" placeholder="Enter your name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="your.email@example.com" required>
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" placeholder="07XXX XXXXXX" required>
+        </div>
+
+        <div class="form-group">
+            <label for="day">Preferred Day</label>
+            <select id="day" required onchange="updateTimeSlots()">
+                <option value="">Select a day</option>
+                <option value="wednesday">Wednesday (after 4:30 PM)</option>
+                <option value="friday">Friday (after 6:30 PM)</option>
+                <option value="saturday">Saturday (anytime)</option>
+                <option value="sunday">Sunday (anytime)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="time">Preferred Time</label>
+            <select id="time" required>
+                <option value="">Select a day first</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="goals">Your Fitness Goals</label>
+            <textarea id="goals" placeholder="Tell me about your fitness goals and what you'd like to achieve..."></textarea>
+        </div>
+
+        <button class="button back-button" onclick="hideBooking()">
+            Back to Home
+        </button>
+        <button class="button" onclick="submitBooking()">
+            Submit Booking Request
+        </button>
+
+        <div id="successMessage" class="success-message">
+            ✓ Booking request submitted! I'll contact you shortly to confirm your session.
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function showHome() {
+        document.getElementById('mainContent').style.display = 'block';
+        document.getElementById('gallerySection').classList.remove('active');
+        document.getElementById('bookingSection').classList.remove('active');
+        updateActiveNav('home');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showGallery() {
+        document.getElementById('mainContent').style.display = 'none';
+        document.getElementById('bookingSection').classList.remove('active');
+        document.getElementById('gallerySection').classList.add('active');
+        updateActiveNav('gallery');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function updateActiveNav(active) {
+        const links = document.querySelectorAll('.nav-link');
+        links.forEach(link => link.classList.remove('active'));
+        if (active === 'home') links[0].classList.add('active');
+        if (active === 'gallery') links[1].classList.add('active');
+        if (active === 'booking') links[2].classList.add('active');
+    }
+
+    function updateTimeSlots() {
+        const daySelect = document.getElementById('day');
+        const timeSelect = document.getElementById('time');
+        const selectedDay = daySelect.value;
+        
+        // Clear existing options
+        timeSelect.innerHTML = '<option value="">Select a time</option>';
+        
+        let timeSlots = [];
+        
+        if (selectedDay === 'wednesday') {
+            // Wednesday: 4:30 PM - 9:00 PM
+            timeSlots = [
+                { value: "16:30", label: "4:30 PM" },
+                { value: "17:00", label: "5:00 PM" },
+                { value: "17:30", label: "5:30 PM" },
+                { value: "18:00", label: "6:00 PM" },
+                { value: "18:30", label: "6:30 PM" },
+                { value: "19:00", label: "7:00 PM" },
+                { value: "19:30", label: "7:30 PM" },
+                { value: "20:00", label: "8:00 PM" },
+                { value: "20:30", label: "8:30 PM" },
+                { value: "21:00", label: "9:00 PM" }
+            ];
+        } else if (selectedDay === 'friday') {
+            // Friday: 6:30 PM - 9:00 PM
+            timeSlots = [
+                { value: "18:30", label: "6:30 PM" },
+                { value: "19:00", label: "7:00 PM" },
+                { value: "19:30", label: "7:30 PM" },
+                { value: "20:00", label: "8:00 PM" },
+                { value: "20:30", label: "8:30 PM" },
+                { value: "21:00", label: "9:00 PM" }
+            ];
+        } else if (selectedDay === 'saturday' || selectedDay === 'sunday') {
+            // Saturday & Sunday: 10:30 AM - 9:00 PM
+            timeSlots = [
+                { value: "10:30", label: "10:30 AM" },
+                { value: "11:00", label: "11:00 AM" },
+                { value: "11:30", label: "11:30 AM" },
+                { value: "12:00", label: "12:00 PM" },
+                { value: "12:30", label: "12:30 PM" },
+                { value: "13:00", label: "1:00 PM" },
+                { value: "13:30", label: "1:30 PM" },
+                { value: "14:00", label: "2:00 PM" },
+                { value: "14:30", label: "2:30 PM" },
+                { value: "15:00", label: "3:00 PM" },
+                { value: "15:30", label: "3:30 PM" },
+                { value: "16:00", label: "4:00 PM" },
+                { value: "16:30", label: "4:30 PM" },
+                { value: "17:00", label: "5:00 PM" },
+                { value: "17:30", label: "5:30 PM" },
+                { value: "18:00", label: "6:00 PM" },
+                { value: "18:30", label: "6:30 PM" },
+                { value: "19:00", label: "7:00 PM" },
+                { value: "19:30", label: "7:30 PM" },
+                { value: "20:00", label: "8:00 PM" },
+                { value: "20:30", label: "8:30 PM" },
+                { value: "21:00", label: "9:00 PM" }
+            ];
+        }
+        
+        // Add time slots to dropdown
+        timeSlots.forEach(slot => {
+            const option = document.createElement('option');
+            option.value = slot.value;
+            option.textContent = slot.label;
+            timeSelect.appendChild(option);
+        });
+    }
+
+    function showBooking() {
+        document.getElementById('mainContent').style.display = 'none';
+        document.getElementById('gallerySection').classList.remove('active');
+        document.getElementById('bookingSection').classList.add('active');
+        updateActiveNav('booking');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function hideBooking() {
+        showHome();
+    }
+
+    function submitBooking() {
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+        const day = document.getElementById('day').value;
+        const time = document.getElementById('time').value;
+        const goals = document.getElementById('goals').value;
+
+        if (!name || !email || !phone || !day || !time) {
+            alert('Please fill in all required fields');
+            return;
+        }
+
+        // Prepare template parameters
+        const templateParams = {
+            from_name: name,
+            from_email: email,
+            phone: phone,
+            day: day,
+            time: time,
+            goals: goals || 'Not specified'
+        };
+
+        // Send email via EmailJS
+        emailjs.send('service_riv8f4h', 'template_rccyic6', templateParams)
+            .then(function(response) {
+                console.log('SUCCESS!', response.status, response.text);
+                // Show success message
+                document.getElementById('successMessage').classList.add('show');
+
+                // Reset form after 3 seconds and go back to home
+                setTimeout(() => {
+                    document.getElementById('name').value = '';
+                    document.getElementById('email').value = '';
+                    document.getElementById('phone').value = '';
+                    document.getElementById('day').value = '';
+                    document.getElementById('time').value = '';
+                    document.getElementById('goals').value = '';
+                    document.getElementById('successMessage').classList.remove('show');
+                    hideBooking();
+                }, 3000);
+            }, function(error) {
+                console.log('FAILED...', error);
+                alert('Sorry, there was an error submitting your booking. Please try again or email lewisdarrell123@gmail.com directly.');
+            });
+    }
+</script>
+
+</body>
+</html>
